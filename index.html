@@ -2,8 +2,96 @@
 <html lang="en">
 <head>
     <title>RedPenIt</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <input type="file" id="imageLoader" name="imageLoader"/>
+    <canvas id="imageCanvas"></canvas>
+    <button id="downloadBtn">Download</button>
+    <button id="copyBtn">Copy to Clipboard</button>
+    <script>
+        const imageLoader = document.getElementById('imageLoader');
+        const canvas = document.getElementById('imageCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
 
+        // Load and draw the image onto the canvas
+        imageLoader.addEventListener('change', handleImage, false);
+        function handleImage(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        // Drawing functionality
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function draw(e) {
+            if (isDrawing) {
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 2;
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                ctx.stroke();
+                ctx.closePath();
+                isDrawing = false;
+            }
+        }
+
+        // Download functionality
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            const link = document.createElement('a');
+            link.download = 'edited-image.png';
+            link.href = image;
+            link.click();
+        });
+
+        // Copy to clipboard functionality
+        document.getElementById('copyBtn').addEventListener('click', async function() {
+            try {
+                const imgDataUrl = canvas.toDataURL('image/png');
+                const data = await fetch(imgDataUrl);
+                const blob = await data.blob();
+                await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+                alert('Image copied to clipboard.');
+            } catch (error) {
+                console.error('Error copying image to clipboard: ', error);
+            }
+        });
+    </script>
 </body>
 </html>
