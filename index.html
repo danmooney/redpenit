@@ -46,17 +46,26 @@
         const canvas = document.getElementById('imageCanvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
+        let img;
+
+        // Adjust the handleImage and handleDrop functions to scale the image to fit the viewport
+        function scaleAndDrawImage(img) {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            let scale = Math.min(viewportWidth / img.width, viewportHeight / img.height, 1); // Ensure scale is not more than 1
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
 
         // Load and draw the image onto the canvas
         imageLoader.addEventListener('change', handleImage, false);
         function handleImage(e) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                const img = new Image();
+                img = new Image();
                 img.onload = function() {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
+                    scaleAndDrawImage(img);
                 }
                 img.src = event.target.result;
             }
@@ -71,11 +80,9 @@
                     const blob = item.getAsFile();
                     const reader = new FileReader();
                     reader.onload = function(event) {
-                        const img = new Image();
+                        img = new Image();
                         img.onload = function() {
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            ctx.drawImage(img, 0, 0);
+                            scaleAndDrawImage(img);
                         };
                         img.src = event.target.result;
                     };
@@ -113,11 +120,9 @@
             if (files.length > 0 && files[0].type.match('image.*')) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    const img = new Image();
+                    img = new Image();
                     img.onload = function() {
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage(img, 0, 0);
+                        scaleAndDrawImage(img);
                     };
                     img.src = event.target.result;
                 };
