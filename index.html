@@ -3,23 +3,44 @@
 <head>
     <title>RedPenIt</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
         body {
+            min-height: 100vh; /* Ensure body covers the viewport */
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
         }
+
         canvas {
             border: 1px solid #000;
             margin-top: 20px;
         }
+
+        .drag-over {
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 10px; /* Adds space between the form elements */
+            box-sizing: border-box; /* Ensures padding does not increase the size of the container */
+        }
     </style>
 </head>
 <body>
-    <input type="file" id="imageLoader" name="imageLoader"/>
-    <canvas id="imageCanvas"></canvas>
-    <button id="downloadBtn">Download</button>
-    <button id="copyBtn">Copy to Clipboard</button>
+    <div class="form-container">
+        <input type="file" id="imageLoader" name="imageLoader"/>
+        <canvas id="imageCanvas"></canvas>
+        <button id="downloadBtn">Download</button>
+        <button id="copyBtn">Copy to Clipboard</button>
+    </div>
     <script>
         const imageLoader = document.getElementById('imageLoader');
         const canvas = document.getElementById('imageCanvas');
@@ -62,6 +83,47 @@
                 }
             }
         });
+
+        // Add event listeners for drag and drop
+        document.body.addEventListener('dragover', handleDragOver, false);
+        document.body.addEventListener('dragenter', handleDragEnter, false);
+        document.body.addEventListener('dragleave', handleDragLeave, false);
+        document.body.addEventListener('drop', handleDrop, false);
+
+        function handleDragOver(e) {
+            e.preventDefault(); // Necessary to allow for dropping
+            e.dataTransfer.dropEffect = 'copy'; // Show the copy icon when dragging over
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            document.body.classList.add('drag-over'); // Add styling class
+        }
+
+        function handleDragLeave(e) {
+            document.body.classList.remove('drag-over'); // Remove styling class
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.body.classList.remove('drag-over'); // Remove styling class
+
+            // Process the dropped file
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.match('image.*')) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        }
 
         // Drawing functionality
         canvas.addEventListener('mousedown', startDrawing);
