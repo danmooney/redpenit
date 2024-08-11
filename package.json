@@ -1,0 +1,31 @@
+{
+  "name": "redpenit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp-watch": "^5.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "through2": "^4.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danmooney/redpenit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danmooney/redpenit/issues"
+  },
+  "homepage": "https://github.com/danmooney/redpenit#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
