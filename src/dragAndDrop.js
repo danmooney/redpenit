@@ -1,3 +1,5 @@
+import { scaleAndDrawImage } from './imageLoader.js';
+
 document.body.addEventListener('dragover', handleDragOver, false);
 document.body.addEventListener('dragenter', handleDragEnter, false);
 document.body.addEventListener('dragleave', handleDragLeave, false);
