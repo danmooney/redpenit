@@ -1,4 +1,5 @@
 import { scaleAndDrawImage } from './imageLoader.js';
+import { setImg } from './state.js';
 
 document.body.addEventListener('dragover', handleDragOver, false);
 document.body.addEventListener('dragenter', handleDragEnter, false);
@@ -26,8 +27,9 @@ function handleDrop(e) {
     if (files.length > 0 && files[0].type.match('image.*')) {
         const reader = new FileReader();
         reader.onload = function(event) {
-            img = new Image();
+            const img = new Image();
             img.onload = function() {
+                setImg(img);
                 scaleAndDrawImage(img);
             };
             img.src = event.target.result;
