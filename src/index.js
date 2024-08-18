@@ -1,5 +1,6 @@
 import canvas from './lib/elements/canvas.js';
 import './copyToClipboard.js';
+import './pasteToClipboard.js';
 import './download.js';
 import './dragAndDrop.js';
 import './drawing.js';
