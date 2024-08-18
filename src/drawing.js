@@ -1,6 +1,7 @@
+import canvas from './lib/elements/canvas.js';
+
 let isDrawing = false;
 
-const canvas = document.getElementById('imageCanvas');
 const ctx = canvas.getContext('2d');
 
 canvas.addEventListener('mousedown', startDrawing);

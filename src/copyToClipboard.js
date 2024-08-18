@@ -1,3 +1,5 @@
+import canvas from './lib/elements/canvas.js';
+
 document.getElementById('copyBtn').addEventListener('click', async function() {
     try {
         const imgDataUrl = canvas.toDataURL('image/png');

@@ -1,3 +1,4 @@
+import canvas from './lib/elements/canvas.js';
 const imageLoader = document.getElementById('imageLoader');
 let img;
 
