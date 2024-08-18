@@ -8,6 +8,19 @@ import './imageLoader.js';
 import './zoom.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize any additional setup if needed
+    const ctx = canvas.getContext('2d');
+    const text = 'Drag & Drop, Upload, or Paste an Image';
+    const maxWidth = canvas.width * 0.8; // 80% of canvas width
+    let fontSize = 20;
+
+    // Adjust font size to fit the text within the canvas width
+    do {
+        ctx.font = `${fontSize}px Arial`;
+        fontSize--;
+    } while (ctx.measureText(text).width > maxWidth);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'black';
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
     console.log('Application initialized');
 });
