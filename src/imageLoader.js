@@ -36,6 +36,10 @@ function handleImageInput(e) {
 
 fileInput.addEventListener('change', handleImageInput, false);
 
+document.getElementById('uploadBtn').addEventListener('click', function() {
+    fileInput.click();
+});
+
 export {
     scaleAndDrawImage
 }

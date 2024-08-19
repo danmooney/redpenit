@@ -68,12 +68,18 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1>RedPenIt - Start drawing in red pen!</h1>
-        <input type="file" id="imageFileInput" name="imageFileInput"/>
+        <input type="file" id="imageFileInput" name="imageFileInput" style="display: none;"/>
+        <button id="uploadBtn">Upload Image</button>
+        <span id="fileName"></span>
         <canvas id="imageCanvas" width="800" height="600"></canvas>
         <div class="button-container">
             <button id="downloadBtn">Download</button>
