@@ -2,14 +2,22 @@ import canvas from './lib/elements/canvas.js';
 import fileInput from './lib/elements/fileInput.js';
 import { setImg } from './state.js';
 
+const initialCanvasHeight = canvas.height;
+
 function scaleAndDrawImage(img) {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const scale = Math.min(viewportWidth / img.width, viewportHeight / img.height, 1);
-    canvas.width = img.width * scale;
-    canvas.height = img.height * scale;
+
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing
+
+    const scaledWidth = img.width * scale;
+    const scaledHeight = img.height * scale;
+
+    canvas.width = scaledWidth;
+    canvas.height = Math.min(scaledHeight, initialCanvasHeight);
+    ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 }
 
 function handleImageInput(e) {
