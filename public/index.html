@@ -62,6 +62,10 @@
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between icon and text */
+            font-size: 16px; /* Increase font size */
         }
 
         button:hover {
@@ -71,18 +75,36 @@
         input[type="file"] {
             display: none; /* Hide the default file input */
         }
+
+        /* Example icon styles, replace with actual icon paths */
+        .icon-upload::before {
+            content: url('img/image.svg'); /* Replace with actual icon path */
+        }
+
+        .icon-download::before {
+            content: url('img/download.svg'); /* Replace with actual icon path */
+        }
+
+        .icon-copy::before {
+            content: url('img/clipboard.svg'); /* Replace with actual icon path */
+        }
+
+        button i::before {
+            display: inline-block;
+            vertical-align: middle;
+            filter: invert(1); /* Apply white color to the icons */
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1>RedPenIt - Start drawing in red pen!</h1>
         <input type="file" id="imageFileInput" name="imageFileInput" style="display: none;"/>
-        <button id="uploadBtn">Upload Image</button>
-        <span id="fileName"></span>
+        <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
         <canvas id="imageCanvas" width="800" height="600"></canvas>
         <div class="button-container">
-            <button id="downloadBtn">Download</button>
-            <button id="copyBtn">Copy to Clipboard</button>
+            <button id="downloadBtn"><i class="icon-download"></i> Download</button>
+            <button id="copyBtn"><i class="icon-copy"></i> Copy to Clipboard</button>
         </div>
     </div>
     <div id="notification" class="notification">Image copied to clipboard.</div>
