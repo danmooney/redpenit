@@ -1,7 +1,7 @@
 # Node modules
 node_modules/
 
-# Gulp build directory
+# Webpack build directory
 build/
 
 # Logs
