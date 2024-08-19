@@ -23,6 +23,7 @@ function handleImageInput(e) {
         img.src = event.target.result;
     };
     reader.readAsDataURL(e.target.files[0]);
+    e.target.value = ''; // Clear the file input
 }
 
 fileInput.addEventListener('change', handleImageInput, false);
