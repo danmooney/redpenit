@@ -32,6 +32,23 @@
             gap: 10px; /* Adds space between the form elements */
             box-sizing: border-box; /* Ensures padding does not increase the size of the container */
         }
+
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +59,7 @@
         <button id="downloadBtn">Download</button>
         <button id="copyBtn">Copy to Clipboard</button>
     </div>
+    <div id="notification" class="notification">Image copied to clipboard.</div>
     <script src="build/main.js"></script>
 </body>
 </html>
