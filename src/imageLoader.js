@@ -1,5 +1,6 @@
 import canvas from './lib/elements/canvas.js';
 import fileInput from './lib/elements/fileInput.js';
+import { showNotification } from "./lib/components/notification";
 import { setImg } from './state.js';
 
 const initialCanvasHeight = canvas.height;
@@ -21,6 +22,12 @@ function scaleAndDrawImage(img) {
 }
 
 function handleImageInput(e) {
+    const file = e.target.files[0];
+    if (!file.type.startsWith('image/')) {
+        showNotification('Please upload a valid image file.');
+        return;
+    }
+
     const reader = new FileReader();
     reader.onload = function(event) {
         const img = new Image();
