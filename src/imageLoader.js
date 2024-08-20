@@ -24,7 +24,7 @@ function scaleAndDrawImage(img) {
 function handleImageInput(e) {
     const file = e.target.files[0];
     if (!file.type.startsWith('image/')) {
-        showNotification('Please upload a valid image file.');
+        showNotification('Please upload a valid image file.', 'error', 'top');
         return;
     }
 

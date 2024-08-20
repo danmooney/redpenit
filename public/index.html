@@ -37,7 +37,6 @@
         .notification {
             display: none;
             position: fixed;
-            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             background-color: #4CAF50;
@@ -49,6 +48,22 @@
 
         .notification.show {
             display: block;
+        }
+
+        .notification.info {
+            background-color: #4CAF50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
+        .notification.bottom {
+            bottom: 20px;
+        }
+
+        .notification.top {
+            top: 20px;
         }
 
         .button-container {
