@@ -1,4 +1,5 @@
 import canvas from './lib/elements/canvas.js';
+import { showNotification } from './lib/components/notification.js';
 
 document.getElementById('copyBtn').addEventListener('click', async function() {
     try {
@@ -11,12 +12,3 @@ document.getElementById('copyBtn').addEventListener('click', async function() {
         console.error('Error copying image to clipboard: ', error);
     }
 });
-
-function showNotification(message) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.add('show');
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000); // Hide after 3 seconds
-}
