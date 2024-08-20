@@ -12,15 +12,19 @@ canvas.addEventListener('mouseout', stopDrawing);
 
 function startDrawing(e) {
     isDrawing = true;
+    ctx.strokeStyle = 'red'; // Set the stroke style to red
+    ctx.fillStyle = 'red'; // Set the fill style to red
+    ctx.lineWidth = 2; // Set the line width
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    ctx.arc(e.offsetX, e.offsetY, ctx.lineWidth / 2, 0, Math.PI * 2); // Draw a small circle with the same thickness as the line
+    ctx.fill(); // Fill the circle
     // Save the current state to the undo stack
     undoStack.push(canvas.toDataURL());
 }
 
 function draw(e) {
     if (isDrawing) {
-        ctx.strokeStyle = 'red';
+        ctx.strokeStyle = 'red'; // Ensure the stroke style is red
         ctx.lineWidth = 2;
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
