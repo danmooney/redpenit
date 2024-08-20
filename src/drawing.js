@@ -1,5 +1,6 @@
 import canvas from './lib/elements/canvas.js';
 import { showNotification } from "./lib/components/notification";
+import { originalCanvasDataURL } from './index.js';
 
 let isDrawing = false;
 let shouldClearCanvas = false;
@@ -12,7 +13,7 @@ canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
 function startDrawing(e) {
-    if (undoStack.length === 0) {
+    if (undoStack.length === 0 && canvas.toDataURL() === originalCanvasDataURL) {
         shouldClearCanvas = true; // Set the flag to clear the canvas on the first drag
     }
     isDrawing = true;

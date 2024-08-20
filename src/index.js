@@ -7,6 +7,8 @@ import './drawing.js';
 import './imageLoader.js';
 import './zoom.js';
 
+let originalCanvasDataURL;
+
 document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const text = 'Drag & Drop, Upload, or Paste an Image';
@@ -23,4 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillStyle = 'black';
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
     console.log('Application initialized');
+
+    // Store the original data URL of the canvas
+    originalCanvasDataURL = canvas.toDataURL();
 });
+
+export { originalCanvasDataURL };
