@@ -17,7 +17,13 @@ function handleDragEnter(e) {
 }
 
 function handleDragLeave(e) {
-    document.body.classList.remove('drag-over');
+    e.preventDefault();
+
+    const isLeavingWindow = e.clientX === 0 && e.clientY === 0;
+
+    if (isLeavingWindow) {
+        document.body.classList.remove('drag-over');
+    }
 }
 
 function handleDrop(e) {
