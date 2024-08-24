@@ -13,7 +13,14 @@ canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
+// Add touch event listeners
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDrawing);
+canvas.addEventListener('touchcancel', stopDrawing);
+
 function startDrawing(e) {
+    e.preventDefault();
     if (undoStack.length === 0 && canvas.toDataURL() === originalCanvasDataURL) {
         shouldClearCanvas = true; // Set the flag to clear the canvas on the first drag
     }
@@ -28,16 +35,21 @@ function startDrawing(e) {
 
 function draw(e) {
     if (isDrawing) {
+        e.preventDefault();
         if (shouldClearCanvas) {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas on the first drag
             shouldClearCanvas = false; // Reset the flag
         }
-        ctx.lineTo(e.offsetX, e.offsetY);
+        const rect = canvas.getBoundingClientRect();
+        const x = e.touches ? e.touches[0].clientX - rect.left : e.offsetX;
+        const y = e.touches ? e.touches[0].clientY - rect.top : e.offsetY;
+        ctx.lineTo(x, y);
         ctx.stroke();
     }
 }
 
-function stopDrawing() {
+function stopDrawing(e) {
+    e.preventDefault();
     if (isDrawing) {
         ctx.stroke();
         ctx.closePath();
