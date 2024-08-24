@@ -1,12 +1,12 @@
 const path = require('path');
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'main.js',
-        path: path.resolve(__dirname, 'public/build')
+        filename: 'bundle.js',
+        path: path.join(__dirname, 'public/js/'),
+        publicPath: '/js/',
     },
     module: {
         rules: [
@@ -22,5 +22,14 @@ module.exports = {
             }
         ]
     },
-    watch: !isProduction
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'public')
+        },
+        compress: true,
+        port: 3000,
+        open: true,
+        hot: true,
+        host: '0.0.0.0'
+    }
 };
