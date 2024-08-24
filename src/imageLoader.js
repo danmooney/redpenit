@@ -38,7 +38,10 @@ function handleImageInput(e) {
         img.src = event.target.result;
     };
     reader.readAsDataURL(e.target.files[0]);
-    e.target.value = ''; // Clear the file input
+    setTimeout(
+        () => e.target.value = '',
+        0
+    ); // clear the input value; bind in the next tick for other events to use the value
 }
 
 fileInput.addEventListener('change', handleImageInput, false);

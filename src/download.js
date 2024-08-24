@@ -2,13 +2,20 @@ import canvas from './lib/elements/canvas.js';
 import downloadButton from "./lib/elements/downloadButton";
 import fileInput from './lib/elements/fileInput.js';
 
+let uploadedFileName = '';
+
+fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+        uploadedFileName = fileInput.files[0].name;
+    }
+});
+
 downloadButton.addEventListener('click', function() {
     const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
     let fileName = 'redpenit-';
     let fileExtension = '.png';
 
-    if (fileInput.files.length > 0) {
-        const uploadedFileName = fileInput.files[0].name;
+    if (uploadedFileName) {
         const uploadedFileExtension = uploadedFileName.substring(uploadedFileName.lastIndexOf('.'));
         fileName += uploadedFileName.substring(0, uploadedFileName.lastIndexOf('.'));
         fileExtension = uploadedFileExtension;
