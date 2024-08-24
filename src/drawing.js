@@ -1,6 +1,7 @@
 import canvas from './lib/elements/canvas.js';
 import { showNotification } from "./lib/components/notification";
 import { originalCanvasDataURL } from './index.js';
+import downloadButton from "./lib/elements/downloadButton";
 
 let isDrawing = false;
 let shouldClearCanvas = false;
@@ -63,10 +64,16 @@ document.getElementById('undoBtn').addEventListener('click', undo);
 document.addEventListener('keydown', function(event) {
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const isUndo = (isMac && event.metaKey && event.key === 'z') || (!isMac && event.ctrlKey && event.key === 'z');
+    const isSave = (isMac && event.metaKey && event.key === 's') || (!isMac && event.ctrlKey && event.key === 's');
 
     if (isUndo) {
         event.preventDefault();
         undo();
+    }
+
+    if (isSave) {
+        event.preventDefault();
+        downloadButton.click();
     }
 });
 
