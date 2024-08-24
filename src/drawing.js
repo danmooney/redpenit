@@ -23,19 +23,18 @@ canvas.addEventListener('touchcancel', handleTouchEnd);
 function handleTouchStart(e) {
     touchPoints = e.touches.length;
     updateTouchPointsDisplay();
-    setTimeout(() => {
-        if (touchPoints > 1) return; // Allow pinch and zoom
+    setTimeout(() => { // necessary to evaluate pinch and zoom; necessary to NOT use in handleTouchMove to be able to evaluate scroll
+        if (touchPoints > 1) return; // Allow pinch and zoom to
         startDrawing(e);
-    })
+    });
 }
 
 function handleTouchMove(e) {
     touchPoints = e.touches.length;
     updateTouchPointsDisplay();
-    setTimeout(() => {
-        if (touchPoints > 1) return; // Allow pinch and zoom
-        draw(e);
-    })
+    if (touchPoints > 1) return; // Allow pinch and zoom
+    e.preventDefault(); // Prevent scrolling while drawing
+    draw(e);
 }
 
 function handleTouchEnd(e) {
@@ -45,10 +44,13 @@ function handleTouchEnd(e) {
 }
 
 function startDrawing(e) {
+    if (touchPoints > 1) return; // If more than one touch point, do not start drawing
     e.preventDefault();
+
     if (undoStack.length === 0 && canvas.toDataURL() === originalCanvasDataURL) {
         shouldClearCanvas = true; // Set the flag to clear the canvas on the first drag
     }
+
     isDrawing = true;
     ctx.strokeStyle = 'red'; // Set the stroke style to red
     ctx.fillStyle = 'red'; // Set the fill style to red
