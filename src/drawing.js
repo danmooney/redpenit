@@ -60,6 +60,16 @@ function undo() {
 
 document.getElementById('undoBtn').addEventListener('click', undo);
 
+document.addEventListener('keydown', function(event) {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isUndo = (isMac && event.metaKey && event.key === 'z') || (!isMac && event.ctrlKey && event.key === 'z');
+
+    if (isUndo) {
+        event.preventDefault();
+        undo();
+    }
+});
+
 export {
     startDrawing,
     draw,
