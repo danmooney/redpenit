@@ -5,6 +5,7 @@ import downloadButton from "./lib/elements/downloadButton";
 
 let isDrawing = false;
 let shouldClearCanvas = false;
+let touchPoints = 0;
 const ctx = canvas.getContext('2d');
 const undoStack = [];
 
@@ -14,10 +15,34 @@ canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
 
 // Add touch event listeners
-canvas.addEventListener('touchstart', startDrawing);
-canvas.addEventListener('touchmove', draw);
-canvas.addEventListener('touchend', stopDrawing);
-canvas.addEventListener('touchcancel', stopDrawing);
+canvas.addEventListener('touchstart', handleTouchStart);
+canvas.addEventListener('touchmove', handleTouchMove);
+canvas.addEventListener('touchend', handleTouchEnd);
+canvas.addEventListener('touchcancel', handleTouchEnd);
+
+function handleTouchStart(e) {
+    touchPoints = e.touches.length;
+    updateTouchPointsDisplay();
+    setTimeout(() => {
+        if (touchPoints > 1) return; // Allow pinch and zoom
+        startDrawing(e);
+    })
+}
+
+function handleTouchMove(e) {
+    touchPoints = e.touches.length;
+    updateTouchPointsDisplay();
+    setTimeout(() => {
+        if (touchPoints > 1) return; // Allow pinch and zoom
+        draw(e);
+    })
+}
+
+function handleTouchEnd(e) {
+    touchPoints = e.touches.length;
+    updateTouchPointsDisplay();
+    stopDrawing(e);
+}
 
 function startDrawing(e) {
     e.preventDefault();
@@ -49,12 +74,14 @@ function draw(e) {
 }
 
 function stopDrawing(e) {
+    if (touchPoints > 1) return; // If more than one touch point, do not stop drawing
     e.preventDefault();
     if (isDrawing) {
         ctx.stroke();
         ctx.closePath();
         isDrawing = false;
     }
+    touchPoints = 0; // Reset touch points
 }
 
 function undo() {
@@ -88,6 +115,22 @@ document.addEventListener('keydown', function(event) {
         downloadButton.click();
     }
 });
+
+// Create an element to display the number of touch points
+const touchPointsDisplay = document.createElement('div');
+touchPointsDisplay.id = 'touchPointsDisplay';
+touchPointsDisplay.style.position = 'fixed';
+touchPointsDisplay.style.bottom = '10px';
+touchPointsDisplay.style.right = '10px';
+touchPointsDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+touchPointsDisplay.style.color = 'white';
+touchPointsDisplay.style.padding = '5px 10px';
+touchPointsDisplay.style.borderRadius = '5px';
+document.body.appendChild(touchPointsDisplay);
+
+function updateTouchPointsDisplay() {
+    touchPointsDisplay.textContent = `Touch Points: ${touchPoints}`;
+}
 
 export {
     startDrawing,
