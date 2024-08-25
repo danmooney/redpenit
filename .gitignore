@@ -31,3 +31,6 @@ jspm_packages/
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+# App-specific files
+starting_files/
