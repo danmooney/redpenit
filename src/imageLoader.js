@@ -47,7 +47,6 @@ function handleImageInput(e) {
 
 function handlePaste() {
     navigator.clipboard.read().then(items => {
-        debugger;
         for (const item of items) {
             if (item.types.includes('image/png')) {
                 item.getType('image/png').then(blob => {
