@@ -128,7 +128,7 @@ touchPointsDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 touchPointsDisplay.style.color = 'white';
 touchPointsDisplay.style.padding = '5px 10px';
 touchPointsDisplay.style.borderRadius = '5px';
-document.body.appendChild(touchPointsDisplay);
+// document.body.appendChild(touchPointsDisplay);
 
 function updateTouchPointsDisplay() {
     touchPointsDisplay.textContent = `Touch Points: ${touchPoints}`;
