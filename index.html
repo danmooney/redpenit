@@ -114,6 +114,10 @@
             content: url('img/clipboard.svg');
         }
 
+        .icon-paste::before {
+            content: url('img/clipboard.svg');
+        }
+
         .icon-undo::before {
             content: url('img/rotate-ccw.svg');
         }
@@ -132,7 +136,10 @@
     <div class="form-container">
         <h1>RedPenIt - Draw on Your Images using Red Pen</h1>
         <input type="file" id="imageFileInput" name="imageFileInput" accept="image/*" style="display: none;"/>
-        <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
+        <div class="button-container">
+            <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
+            <button id="pasteBtn"><i class="icon-paste"></i> Paste from Clipboard</button>
+        </div>
         <canvas id="imageCanvas" width="800" height="600"></canvas>
         <div class="button-container">
             <button id="downloadBtn"><i class="icon-download"></i> Download</button>
