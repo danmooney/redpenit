@@ -52,7 +52,24 @@
       ]
     }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #141414;
+            --ink-soft: #3a3a38;
+            --paper: #ffffff;
+            --hush: #f6f4ef;            /* warm off-white for hover */
+            --hairline: #e3dfd6;
+            --hairline-strong: #cdc8bc;
+            --brand-red: #d92d20;
+            --brand-red-deep: #b91c1c;
+            --brand-red-glow: rgba(217, 45, 32, 0.22);
+            --shadow-rest: 0 1px 0 rgba(20,20,20,0.03), 0 1px 2px rgba(20,20,20,0.05);
+            --shadow-lift: 0 2px 0 rgba(20,20,20,0.03), 0 6px 14px rgba(20,20,20,0.08);
+        }
+
         html, body {
             height: 100%;
             margin: 0;
@@ -64,7 +81,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--ink);
             overscroll-behavior: contain;
             touch-action: manipulation;
             overflow-x: hidden;
@@ -156,22 +174,62 @@
         }
 
         button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
+            padding: 10px 18px;
+            border: 1px solid var(--hairline-strong);
+            border-radius: 8px;
+            background-color: var(--paper);
+            color: var(--ink);
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: flex;
+            transition: background-color 160ms ease,
+                        border-color 160ms ease,
+                        transform 160ms ease,
+                        box-shadow 160ms ease;
+            display: inline-flex;
             align-items: center;
-            gap: 8px; /* Space between icon and text */
-            font-size: 16px; /* Increase font size */
+            gap: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: -0.005em;
             line-height: 1;
+            box-shadow: var(--shadow-rest);
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--hush);
+            border-color: #b8b3a7;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lift);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-rest);
+        }
+
+        button:focus-visible {
+            outline: 2px solid var(--brand-red);
+            outline-offset: 2px;
+        }
+
+        /* Primary actions: the two hero workflow moments — Paste in,
+           Copy out. Reserve red so the canvas ink stays the loudest
+           red on the page. */
+        button.primary {
+            background-color: var(--brand-red);
+            color: #fff;
+            border-color: var(--brand-red);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 4px 12px var(--brand-red-glow);
+        }
+
+        button.primary:hover {
+            background-color: var(--brand-red-deep);
+            border-color: var(--brand-red-deep);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.05), 0 8px 20px var(--brand-red-glow);
+        }
+
+        button.primary:active {
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 2px 6px var(--brand-red-glow);
         }
 
         input[type="file"] {
@@ -205,11 +263,18 @@
             line-height: 0;
         }
 
+        /* Secondary buttons: paper background → keep icon glyphs dark.
+           Primary buttons: red background → invert to white. */
         button i::before {
             display: block;
-            filter: invert(1); /* Apply white color to the icons */
             width: 22px;
             height: 22px;
+            opacity: 0.85;
+        }
+
+        button.primary i::before {
+            filter: invert(1);
+            opacity: 1;
         }
 
         @media (max-width: 600px) {
@@ -237,10 +302,10 @@
                 justify-content: center;
                 gap: 6px;
                 padding: 10px 6px;
-                min-height: 60px;
-                font-size: 12px;
+                min-height: 64px;       /* a11y: keep tap target generous */
+                font-size: 13px;
                 font-weight: 600;
-                letter-spacing: 0.03em;
+                letter-spacing: 0.01em;
                 text-align: center;
             }
 
@@ -253,6 +318,17 @@
                 font-size: 14px;
                 padding: 0 12px;
             }
+        }
+
+        .hero-headline {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+        }
+
+        .hero-subhead {
+            font-weight: 400;
+            letter-spacing: -0.005em;
         }
 
         .seo-content {
@@ -477,14 +553,14 @@
         <input type="file" id="imageFileInput" name="imageFileInput" accept="image/*" style="display: none;"/>
         <div class="button-container">
             <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
-            <button id="pasteBtn"><i class="icon-paste"></i> Paste from Clipboard</button>
+            <button id="pasteBtn" class="primary"><i class="icon-paste"></i> Paste from Clipboard</button>
         </div>
         <div class="canvas-wrap">
             <canvas id="imageCanvas" width="800" height="600"></canvas>
         </div>
         <div class="button-container bottom-bar">
             <button id="downloadBtn"><i class="icon-download"></i> Download</button>
-            <button id="copyBtn"><i class="icon-copy"></i> Copy to Clipboard</button>
+            <button id="copyBtn" class="primary"><i class="icon-copy"></i> Copy to Clipboard</button>
             <button id="undoBtn"><i class="icon-undo"></i> Undo</button>
         </div>
     </div>
