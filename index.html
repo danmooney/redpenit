@@ -1,9 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>RedPenIt - Draw on Your Images using Red Pen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RedPenIt — Draw on Screenshots & Annotate Images Online (Free, No Signup)</title>
+    <meta name="description" content="Free online tool to draw on images and screenshots with a red pen. Paste, mark up, and copy back to your clipboard in seconds. No signup, no upload — runs entirely in your browser.">
+    <link rel="canonical" href="https://redpenit.com/">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#d92d20">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RedPenIt">
+    <meta property="og:url" content="https://redpenit.com/">
+    <meta property="og:title" content="RedPenIt — Draw on Screenshots & Annotate Images Online">
+    <meta property="og:description" content="Paste a screenshot, scribble in red pen, copy it back to your clipboard. Free, no signup, runs entirely in your browser.">
+    <meta property="og:image" content="https://redpenit.com/img/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RedPenIt — Draw on Screenshots & Annotate Images Online">
+    <meta name="twitter:description" content="Paste a screenshot, scribble in red pen, copy it back. Free, no signup, runs entirely in your browser.">
+    <meta name="twitter:image" content="https://redpenit.com/img/og-preview.png">
+
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/img/favicon-32x32.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "RedPenIt",
+      "url": "https://redpenit.com/",
+      "description": "Free online tool to draw on images and screenshots with a red pen. Paste, mark up, and copy back to your clipboard. No signup, runs entirely in your browser.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Any (Web)",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Draw on screenshots and images with a red pen",
+        "Paste images directly from your clipboard",
+        "Copy annotated image back to clipboard",
+        "Download annotated image as PNG",
+        "Undo strokes",
+        "Works entirely in your browser — no upload, no signup"
+      ]
+    }
+    </script>
     <style>
         html, body {
             height: 100%;
@@ -140,12 +188,66 @@
             width: 24px;
             height: 28px;
         }
+
+        .seo-content {
+            max-width: 720px;
+            padding: 32px 20px 64px;
+            color: #222;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .seo-content h2 {
+            font-size: 22px;
+            margin-top: 32px;
+            margin-bottom: 8px;
+        }
+
+        .seo-content h3 {
+            font-size: 17px;
+            margin-top: 20px;
+            margin-bottom: 4px;
+        }
+
+        .seo-content p,
+        .seo-content ul {
+            margin: 8px 0;
+        }
+
+        .seo-content ul {
+            padding-left: 20px;
+        }
+
+        .seo-footer {
+            font-size: 13px;
+            color: #666;
+            padding: 16px 20px 32px;
+            text-align: center;
+        }
+
+        .hero-headline {
+            font-size: 28px;
+            line-height: 1.2;
+            margin: 8px 0 4px;
+            text-align: center;
+            max-width: 720px;
+        }
+
+        .hero-subhead {
+            font-size: 16px;
+            color: #555;
+            margin: 0 0 8px;
+            text-align: center;
+            max-width: 640px;
+            line-height: 1.4;
+        }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8484889316798197" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="form-container">
-        <h1>RedPenIt - Draw on Your Images using Red Pen</h1>
+        <h1 class="hero-headline">Paste a screenshot. Scribble in red. Copy it back.</h1>
+        <p class="hero-subhead">The fastest way to mark up a screenshot — free, no signup, runs in your browser.</p>
         <input type="file" id="imageFileInput" name="imageFileInput" accept="image/*" style="display: none;"/>
         <div class="button-container">
             <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
@@ -159,6 +261,55 @@
         </div>
     </div>
     <div id="notification" class="notification">Image copied to clipboard.</div>
+
+    <section class="seo-content">
+        <h2>The fastest way to draw on a screenshot online</h2>
+        <p>RedPenIt is a free, no-signup tool for annotating images and screenshots in your browser. Paste a screenshot straight from your clipboard, scribble in red pen to circle a bug or point something out, and copy the marked-up image right back — ready to drop into Slack, Linear, Jira, GitHub, an email, or a doc.</p>
+        <p>Nothing gets uploaded to a server. The whole tool runs locally in your browser, so screenshots of sensitive UI, internal dashboards, or pre-release work never leave your machine.</p>
+
+        <h2>What people use it for</h2>
+        <ul>
+            <li><strong>Bug reports</strong> — circle the broken element before pasting into a ticket.</li>
+            <li><strong>Design feedback</strong> — mark up a Figma export or a screenshot of a live site.</li>
+            <li><strong>Code &amp; PR reviews</strong> — point at a specific line or block in a diff screenshot.</li>
+            <li><strong>Teaching and tutorials</strong> — highlight buttons and menus in step-by-step guides.</li>
+            <li><strong>Customer support</strong> — annotate screenshots when walking a user through a fix.</li>
+            <li><strong>Quick redlines</strong> — mark up an image, a PDF page, or a photo without opening Photoshop.</li>
+        </ul>
+
+        <h2>How to annotate a screenshot with RedPenIt</h2>
+        <ol>
+            <li>Take a screenshot (⌘⇧4 on Mac, Win+Shift+S on Windows).</li>
+            <li>Click <em>Paste from Clipboard</em> — or just press Ctrl/⌘+V — to drop it onto the canvas.</li>
+            <li>Drag with your mouse or finger to draw in red pen. Use <em>Undo</em> to remove the last stroke.</li>
+            <li>Click <em>Copy to Clipboard</em> to paste the annotated image straight into Slack, Linear, Jira, GitHub, or any doc — or <em>Download</em> it as a PNG.</li>
+        </ol>
+
+        <h2>Frequently asked questions</h2>
+
+        <h3>Is RedPenIt free?</h3>
+        <p>Yes. It's free, requires no account, and has no usage limits.</p>
+
+        <h3>Are my images uploaded anywhere?</h3>
+        <p>No. RedPenIt runs entirely in your browser. Images you paste or open are never sent to a server, which makes it safe for screenshots of internal tools, customer data, or unreleased work.</p>
+
+        <h3>Can I paste a screenshot directly?</h3>
+        <p>Yes — that's the fastest workflow. Take a screenshot, then press Ctrl+V (Windows/Linux) or ⌘+V (Mac) with the page focused, or click <em>Paste from Clipboard</em>.</p>
+
+        <h3>Can I copy the annotated image back to my clipboard?</h3>
+        <p>Yes. Click <em>Copy to Clipboard</em> and paste it directly into Slack, Linear, Jira, GitHub, Notion, Gmail, or any app that accepts images.</p>
+
+        <h3>Does it work on mobile?</h3>
+        <p>Yes — you can draw with your finger on touch devices. The desktop paste-from-clipboard flow is where it's fastest, though.</p>
+
+        <h3>What file formats does it support?</h3>
+        <p>Any image format your browser can open — PNG, JPG, GIF, WebP, and more. Downloads are saved as PNG.</p>
+    </section>
+
+    <footer class="seo-footer">
+        RedPenIt — a free browser-based image annotation tool. No signup, no uploads.
+    </footer>
+
     <script src="js/bundle.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RQDP5E97FT"></script>
