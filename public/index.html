@@ -80,6 +80,17 @@
             gap: 10px; /* Adds space between the buttons */
         }
 
+        .button-container.bottom-bar {
+            position: sticky;
+            bottom: 0;
+            align-self: stretch;
+            justify-content: center;
+            background: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.08);
+            z-index: 1;
+        }
+
         button {
             padding: 10px 20px;
             border: none;
@@ -141,7 +152,7 @@
             <button id="pasteBtn"><i class="icon-paste"></i> Paste from Clipboard</button>
         </div>
         <canvas id="imageCanvas" width="800" height="600"></canvas>
-        <div class="button-container">
+        <div class="button-container bottom-bar">
             <button id="downloadBtn"><i class="icon-download"></i> Download</button>
             <button id="copyBtn"><i class="icon-copy"></i> Copy to Clipboard</button>
             <button id="undoBtn"><i class="icon-undo"></i> Undo</button>

@@ -4,12 +4,8 @@ import pasteInput from './lib/elements/pasteInput.js';
 import { showNotification } from "./lib/components/notification";
 import { setImg } from './state.js';
 
-const initialCanvasHeight = canvas.height;
-
 function scaleAndDrawImage(img) {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const scale = Math.min(viewportWidth / img.width, viewportHeight / img.height, 1);
+    const scale = Math.min(window.innerWidth / img.width, 1);
 
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing
@@ -18,7 +14,7 @@ function scaleAndDrawImage(img) {
     const scaledHeight = img.height * scale;
 
     canvas.width = scaledWidth;
-    canvas.height = Math.min(scaledHeight, initialCanvasHeight);
+    canvas.height = scaledHeight;
     ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 }
 
