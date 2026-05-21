@@ -340,9 +340,59 @@
             display: none;
         }
 
-        body.hide-bottom-ad .tshirt-ad--bottom,
-        body.hide-bottom-ad .tshirt-ad--bottom-mobile {
+        body.hide-bottom-ad .tshirt-ad--bottom {
             display: none;
+        }
+
+        /* Mobile UX salvage: tighter chrome so the canvas + buttons fit on a
+           phone-width viewport without horizontal overflow or wrapping awkwardly. */
+        @media (max-width: 767px) {
+            .form-container {
+                padding: 12px 8px;
+                gap: 8px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .hero-headline {
+                font-size: 20px;
+                margin: 4px 0 2px;
+            }
+
+            .hero-subhead {
+                font-size: 14px;
+                line-height: 1.35;
+            }
+
+            .button-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .button-container.bottom-bar {
+                padding: 8px 4px;
+                gap: 6px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            button i::before {
+                width: 18px;
+                height: 20px;
+            }
+
+            .seo-content {
+                padding: 20px 16px 40px;
+                font-size: 15px;
+            }
+
+            .seo-content h2 {
+                font-size: 19px;
+            }
         }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8484889316798197" crossorigin="anonymous"></script>
