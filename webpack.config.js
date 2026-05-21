@@ -27,7 +27,6 @@ module.exports = {
             directory: path.join(__dirname, 'public')
         },
         compress: true,
-        port: 3000,
         open: false,
         hot: true,
         host: '0.0.0.0'
