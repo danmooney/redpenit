@@ -60,12 +60,14 @@
 
         body {
             min-height: 100vh; /* Ensure body covers the viewport */
+            max-width: 100vw;
             display: flex;
             flex-direction: column;
             align-items: center;
             font-family: Arial, sans-serif;
             overscroll-behavior: contain;
             touch-action: manipulation;
+            overflow-x: hidden;
         }
 
         canvas {
@@ -88,6 +90,20 @@
             padding: 20px;
             gap: 10px;
             box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Wraps the canvas so it can scroll horizontally without expanding the
+           body. If the body expanded, position:fixed banners would center
+           against the wider layout viewport and visually drift off-screen. */
+        .canvas-wrap {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+            display: flex;
+            justify-content: center;
         }
 
         .notification {
@@ -344,6 +360,13 @@
             display: none;
         }
 
+        /* When the page content exceeds the viewport, .button-container.bottom-bar
+           sticks to the viewport bottom. JS sets body.bar-sticky in that state so
+           the fixed mobile banner lifts above the bar instead of covering it. */
+        body.bar-sticky .tshirt-ad--bottom-mobile {
+            bottom: 76px;
+        }
+
         /* Mobile UX salvage: tighter chrome so the canvas + buttons fit on a
            phone-width viewport without horizontal overflow or wrapping awkwardly. */
         @media (max-width: 767px) {
@@ -406,7 +429,9 @@
             <button id="uploadBtn"><i class="icon-upload"></i> Upload Image</button>
             <button id="pasteBtn"><i class="icon-paste"></i> Paste from Clipboard</button>
         </div>
-        <canvas id="imageCanvas" width="800" height="600"></canvas>
+        <div class="canvas-wrap">
+            <canvas id="imageCanvas" width="800" height="600"></canvas>
+        </div>
         <div class="button-container bottom-bar">
             <button id="downloadBtn"><i class="icon-download"></i> Download</button>
             <button id="copyBtn"><i class="icon-copy"></i> Copy to Clipboard</button>

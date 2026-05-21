@@ -134,6 +134,16 @@ function updateOverlapVisibility() {
     document.body.classList.toggle('hide-bottom-ad', hideBottom);
 }
 
+// The .button-container.bottom-bar is position:sticky;bottom:0. When the page
+// content exceeds the viewport it pins to the bottom and collides with the
+// fixed mobile banner. Detect that state so CSS can lift the banner above it.
+function updateBarSticky() {
+    const bar = document.querySelector('.button-container.bottom-bar');
+    if (!bar) return;
+    const stuck = bar.getBoundingClientRect().bottom >= window.innerHeight - 1;
+    document.body.classList.toggle('bar-sticky', stuck);
+}
+
 function initAds() {
     if (isDismissed()) return;
 
@@ -146,10 +156,15 @@ function initAds() {
 
     document.body.appendChild(adRoot);
 
-    updateOverlapVisibility();
-    window.addEventListener('resize', updateOverlapVisibility);
+    const updateAll = () => {
+        updateOverlapVisibility();
+        updateBarSticky();
+    };
+    updateAll();
+    window.addEventListener('resize', updateAll);
+    window.addEventListener('scroll', updateBarSticky, { passive: true });
     if (typeof ResizeObserver === 'function') {
-        new ResizeObserver(updateOverlapVisibility).observe(canvas);
+        new ResizeObserver(updateAll).observe(canvas);
     }
 }
 
