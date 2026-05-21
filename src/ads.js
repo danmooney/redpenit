@@ -77,7 +77,7 @@ function isDismissed() {
     }
 }
 
-function createAdSlot(slot, adRoot) {
+function createAdSlot(slot, adRoot, cleanup) {
     const wrap = document.createElement('div');
     wrap.className = `tshirt-ad tshirt-ad--${slot.position}`;
 
@@ -107,6 +107,7 @@ function createAdSlot(slot, adRoot) {
             window.localStorage.setItem(DISMISS_KEY, String(Date.now()));
         } catch (e) {}
         fireEvent('tshirt_ad_dismissed', slot.position);
+        cleanup();
         adRoot.remove();
     });
     wrap.appendChild(dismiss);
@@ -150,21 +151,33 @@ function initAds() {
     const adRoot = document.createElement('div');
     adRoot.id = 'tshirt-ads-root';
 
-    for (const slot of assignImages()) {
-        adRoot.appendChild(createAdSlot(slot, adRoot));
-    }
-
-    document.body.appendChild(adRoot);
-
     const updateAll = () => {
         updateOverlapVisibility();
         updateBarSticky();
     };
+
+    let overlapObserver = null;
+    const cleanup = () => {
+        window.removeEventListener('resize', updateAll);
+        window.removeEventListener('scroll', updateBarSticky);
+        if (overlapObserver) {
+            overlapObserver.disconnect();
+            overlapObserver = null;
+        }
+    };
+
+    for (const slot of assignImages()) {
+        adRoot.appendChild(createAdSlot(slot, adRoot, cleanup));
+    }
+
+    document.body.appendChild(adRoot);
+
     updateAll();
     window.addEventListener('resize', updateAll);
     window.addEventListener('scroll', updateBarSticky, { passive: true });
     if (typeof ResizeObserver === 'function') {
-        new ResizeObserver(updateAll).observe(canvas);
+        overlapObserver = new ResizeObserver(updateAll);
+        overlapObserver.observe(canvas);
     }
 }
 
