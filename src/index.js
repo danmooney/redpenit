@@ -5,6 +5,7 @@ import './download.js';
 import './dragAndDrop.js';
 import './drawing.js';
 import './imageLoader.js';
+import './ads.js';
 // import './zoom.js';
 
 let originalCanvasDataURL;
