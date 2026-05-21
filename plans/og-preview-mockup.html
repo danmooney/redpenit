@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG preview mockup — RedPenIt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e5e7eb; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* Lock to exact OG dimensions — screenshot this box. */
+  .frame {
+    width: 1200px;
+    height: 630px;
+    background: #f8fafc;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 210px;
+    background: #0f172a;
+    color: #cbd5e1;
+    padding: 18px 14px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 22px;
+    padding: 0 6px;
+  }
+  .logo-mark {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+  }
+  .nav-section { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; padding: 0 6px; margin: 16px 0 6px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 2px;
+  }
+  .nav-item.active { background: #1e293b; color: #fff; }
+  .dot {
+    width: 14px; height: 14px; border-radius: 3px;
+    background: #334155; flex-shrink: 0;
+  }
+  .nav-item.active .dot { background: #6366f1; }
+
+  /* ---------- Topbar ---------- */
+  .topbar {
+    position: absolute;
+    top: 0; left: 210px; right: 0;
+    height: 54px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex; align-items: center;
+    padding: 0 22px;
+    gap: 14px;
+  }
+  .search {
+    flex: 1;
+    height: 32px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    display: flex; align-items: center;
+    padding: 0 12px;
+    color: #94a3b8;
+    font-size: 13px;
+  }
+  .top-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: #f1f5f9;
+  }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #f97316, #ec4899);
+  }
+
+  /* ---------- Main ---------- */
+  .main {
+    position: absolute;
+    top: 54px; left: 210px; right: 0; bottom: 0;
+    padding: 18px 22px;
+  }
+  .page-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .page-title { font-size: 20px; font-weight: 700; }
+  .page-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .date-range {
+    font-size: 12px; color: #475569;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
+    padding: 6px 10px;
+  }
+
+  /* KPI cards */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .kpi-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .kpi-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .kpi-delta { font-size: 11px; margin-top: 4px; }
+  .kpi-delta.up { color: #16a34a; }
+  .kpi-delta.down { color: #dc2626; }
+
+  /* Chart panel */
+  .panel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .panel-title { font-size: 13px; font-weight: 600; }
+  .legend { display: flex; gap: 12px; font-size: 11px; color: #475569; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .chart-grid { stroke: #e2e8f0; stroke-width: 1; }
+  .chart-line-a { fill: none; stroke: #6366f1; stroke-width: 2.5; }
+  .chart-line-b { fill: none; stroke: #a855f7; stroke-width: 2.5; stroke-dasharray: 4 3; }
+  .chart-area { fill: url(#grad); opacity: 0.6; }
+
+  /* Recent table */
+  .row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 0.8fr 0.6fr;
+    gap: 10px;
+    font-size: 12px;
+    padding: 7px 4px;
+    border-bottom: 1px solid #f1f5f9;
+    align-items: center;
+  }
+  .row.head { color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; border-bottom-color: #e2e8f0; }
+  .badge { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+  .badge.ok { background: #dcfce7; color: #166534; }
+  .badge.warn { background: #fef3c7; color: #92400e; }
+  .badge.bad { background: #fee2e2; color: #991b1b; }
+
+  /* ---------- Red pen annotations ---------- */
+  .annotations {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .annotations svg { position: absolute; }
+  .handwritten {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    color: #dc2626;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  /* RedPenIt watermark */
+  .wordmark {
+    position: absolute;
+    right: 18px; bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(4px);
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 6px 14px 6px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .wordmark .pen {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #dc2626;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-family: 'Caveat', cursive; font-size: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-mark"></div> Northwind</div>
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active"><span class="dot"></span> Dashboard</div>
+    <div class="nav-item"><span class="dot"></span> Revenue</div>
+    <div class="nav-item"><span class="dot"></span> Customers</div>
+    <div class="nav-item"><span class="dot"></span> Subscriptions</div>
+    <div class="nav-section">Workspace</div>
+    <div class="nav-item"><span class="dot"></span> Reports</div>
+    <div class="nav-item"><span class="dot"></span> Integrations</div>
+    <div class="nav-item"><span class="dot"></span> Team</div>
+    <div class="nav-item"><span class="dot"></span> Settings</div>
+  </aside>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="search">Search customers, invoices, reports…</div>
+    <div class="top-icon"></div>
+    <div class="top-icon"></div>
+    <div class="avatar"></div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Revenue overview</div>
+        <div class="page-sub">Performance across all active workspaces</div>
+      </div>
+      <div class="date-range">Last 30 days  ▾</div>
+    </div>
+
+    <!-- KPI cards -->
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-label">MRR</div>
+        <div class="kpi-value">$184,920</div>
+        <div class="kpi-delta up">▲ 12.4% vs prev</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Active customers</div>
+        <div class="kpi-value">2,847</div>
+        <div class="kpi-delta up">▲ 3.1% vs prev</div>
+      </div>
+      <div class="kpi" id="bad-kpi">
+        <div class="kpi-label">Net new revenue</div>
+        <div class="kpi-value" style="color:#dc2626;">−$847,231</div>
+        <div class="kpi-delta down">▼ 612% vs prev</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Churn rate</div>
+        <div class="kpi-value">2.1%</div>
+        <div class="kpi-delta up">▼ 0.4pt vs prev</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Monthly recurring revenue</div>
+        <div class="legend">
+          <span><i style="background:#6366f1"></i> This period</span>
+          <span><i style="background:#a855f7"></i> Previous period</span>
+        </div>
+      </div>
+      <svg viewBox="0 0 880 160" width="100%" height="160" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- gridlines -->
+        <line class="chart-grid" x1="0" y1="40"  x2="880" y2="40"/>
+        <line class="chart-grid" x1="0" y1="80"  x2="880" y2="80"/>
+        <line class="chart-grid" x1="0" y1="120" x2="880" y2="120"/>
+        <!-- previous -->
+        <path class="chart-line-b" d="M0,110 C80,95 160,108 240,90 C320,72 400,98 480,82 C560,66 640,80 720,68 C800,56 840,62 880,58"/>
+        <!-- area -->
+        <path class="chart-area" d="M0,95 C80,82 160,90 240,70 C320,55 400,72 480,55 C560,40 640,52 720,38 C800,28 840,32 880,22 L880,160 L0,160 Z"/>
+        <!-- current -->
+        <path class="chart-line-a" d="M0,95 C80,82 160,90 240,70 C320,55 400,72 480,55 C560,40 640,52 720,38 C800,28 840,32 880,22"/>
+        <!-- last point -->
+        <circle cx="880" cy="22" r="4" fill="#6366f1"/>
+      </svg>
+    </div>
+
+    <!-- Transactions table -->
+    <div class="panel" style="padding-top:10px; padding-bottom:6px;">
+      <div class="panel-head" style="margin-bottom:4px;">
+        <div class="panel-title">Recent transactions</div>
+      </div>
+      <div class="row head">
+        <div>Customer</div><div>Plan</div><div>Amount</div><div>Status</div><div style="text-align:right;">Date</div>
+      </div>
+      <div class="row">
+        <div>Acme Industries</div><div>Enterprise</div><div>$4,800.00</div><div><span class="badge ok">Paid</span></div><div style="text-align:right; color:#64748b;">May 18</div>
+      </div>
+      <div class="row">
+        <div>Lumen Studio</div><div>Pro</div><div>$249.00</div><div><span class="badge warn">Pending</span></div><div style="text-align:right; color:#64748b;">May 18</div>
+      </div>
+      <div class="row">
+        <div>Riverbend Co.</div><div>Pro</div><div>$249.00</div><div><span class="badge bad">Failed</span></div><div style="text-align:right; color:#64748b;">May 17</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ---------- Red pen overlay ---------- -->
+  <div class="annotations">
+    <!-- Big wobbly circle around the broken KPI card.
+         Card is roughly at x=210+22+ (3rd of 4 cols across width ~948 with 12px gaps). -->
+    <svg width="260" height="140" style="left:625px; top:108px;">
+      <path d="M 30 70
+               C 30 18, 100 8, 140 12
+               C 200 18, 240 40, 240 78
+               C 240 116, 180 132, 120 128
+               C 60 124, 26 100, 30 70 Z"
+            fill="none" stroke="#dc2626" stroke-width="3.2"
+            stroke-linecap="round" stroke-linejoin="round"
+            transform="rotate(-2 130 70)"/>
+    </svg>
+
+    <!-- Squiggly arrow pointing from the handwritten note down to the circle -->
+    <svg width="160" height="120" style="left:870px; top:170px;">
+      <path d="M 130 12 C 110 35, 90 55, 60 70 C 40 80, 20 88, 10 100"
+            fill="none" stroke="#dc2626" stroke-width="3"
+            stroke-linecap="round"/>
+      <!-- arrowhead -->
+      <path d="M 10 100 L 26 96 M 10 100 L 18 86"
+            fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Handwritten note -->
+    <div class="handwritten" style="left:980px; top:140px; font-size:30px; transform: rotate(-4deg);">
+      this can't<br>be right??
+    </div>
+
+    <!-- Small underline scribble under "−$847,231" — visual exclamation -->
+    <svg width="150" height="20" style="left:660px; top:225px;">
+      <path d="M 4 10 C 30 4, 60 16, 90 8 C 110 4, 130 12, 146 8"
+            fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Wordmark -->
+  <div class="wordmark">
+    <span class="pen">✎</span> RedPenIt
+  </div>
+
+</div>
+</body>
+</html>
