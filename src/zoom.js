@@ -2,7 +2,6 @@ import canvas from './lib/elements/canvas.js';
 import { getImg } from './state.js';
 
 let currentScale = 1;
-const initialCanvasHeight = canvas.height;
 
 function zoomImage(canvasImgSource, wheelEvent) {
     wheelEvent.preventDefault();
@@ -19,7 +18,7 @@ function zoomImage(canvasImgSource, wheelEvent) {
     const scaledHeight = canvasImgSource.height * currentScale;
 
     canvas.width = scaledWidth;
-    canvas.height = Math.min(scaledHeight, initialCanvasHeight);
+    canvas.height = scaledHeight;
     ctx.drawImage(canvasImgSource, 0, 0, scaledWidth, scaledHeight);
 }
 
