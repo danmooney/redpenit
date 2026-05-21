@@ -134,6 +134,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 9500; /* float above sticky bottom-bar and t-shirt ads (z-index: 9000) */
         }
 
         .notification.show {
@@ -150,7 +151,7 @@
         }
 
         .notification.bottom {
-            bottom: 20px;
+            bottom: 88px; /* sit above the sticky bottom-bar */
         }
 
         .notification.top {
