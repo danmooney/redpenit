@@ -295,7 +295,10 @@
                 gap: 8px;
             }
 
-            button {
+            /* Scope to workflow buttons only — keeps ad dismiss buttons
+               (.tshirt-ad__dismiss) round instead of stretching them
+               into 24x64 pills via min-height. */
+            .button-container button {
                 flex: 1 1 0;
                 min-width: 0;
                 flex-direction: column;
